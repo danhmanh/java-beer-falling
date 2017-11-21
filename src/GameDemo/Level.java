@@ -7,7 +7,7 @@ public class Level {
 	
 	private Handler handler ; 
 	private HUD hud ; 
-	private int scoreKeep = 0 ;  
+//	private int scoreKeep = 0 ;  
 	private Random rnd = new Random() ; 
 	
 	
@@ -18,11 +18,16 @@ public class Level {
 	public void tick() {
 		if(Cart.countBeerCollision == 4) {
 			hud.setLevel(hud.getLevel() + 1);
+			
 			if(hud.getLevel() == 2) {
-				handler.addObj(new Bomb(rnd.nextInt(380) , 20 , ID.Bomb));
-				handler.addObj(new Bomb(rnd.nextInt(380) , -200 , ID.Bomb));
+//				handler.addObj(new BouncingBeer(rnd.nextInt(380), 30, ID.BouncingBeer));
+//				handler.addObj(new Bomb(rnd.nextInt(380) , 20 , ID.Bomb));
+//				handler.addObj(new Bomb(rnd.nextInt(380) , -200 , ID.Bomb));
+				
 			} else if(hud.getLevel() == 3) {
-				handler.addObj(new Bomb(rnd.nextInt(380) , 20 , ID.Bomb));
+//				handler.addObj(new Bomb(rnd.nextInt(380) , 20 , ID.Bomb));
+			} else if(hud.getLevel() == 4) {
+				
 			}
 			Cart.countBeerCollision = 0 ; 
 		}

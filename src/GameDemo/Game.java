@@ -4,7 +4,12 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 
 public class Game extends Canvas implements Runnable {
@@ -18,7 +23,7 @@ public class Game extends Canvas implements Runnable {
 	private HUD hud ;
 	private Level level ;
 	private Menu menu ; 
-	
+	private BufferedImage bf1 , bf2 ; 
 	
 	public enum STATE {
 		Menu , Game , Help , End , Quit ,
@@ -32,6 +37,7 @@ public class Game extends Canvas implements Runnable {
 
 	public Game() {
 		rnd = new Random() ; 
+//		hud = new HUD() ;
 		handler = new Handler() ; 
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(new Menu(this, handler, hud));
@@ -51,6 +57,7 @@ public class Game extends Canvas implements Runnable {
 //			handler.addObj(new Beer(rnd.nextInt(370), -480, ID.Beer));
 //			handler.addObj(new Cart(20 ,510, ID.Cart , handler));
 //			handler.addObj(new Beer(rnd.nextInt(370), 60, ID.Beer));
+//			handler.addObj(new BouncingBeer(rnd.nextInt(380), 30, ID.BouncingBeer));
 		}
 		
 
@@ -65,6 +72,7 @@ public class Game extends Canvas implements Runnable {
 
 	public synchronized void stop() {
 		try {
+//			Thread.sleep(1000);
 			thread.join();
 			running = false;
 		} catch (InterruptedException e) {
@@ -92,7 +100,7 @@ public class Game extends Canvas implements Runnable {
 			}
 			if (running)
 				render();
-			frames++;
+			frames ++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
@@ -112,13 +120,22 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		Graphics g = bs.getDrawGraphics() ; 
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+
+		try {
+			bf1 = ImageIO.read(new File("sprite/pinkbg1.jpg")) ;
+			g.drawImage(bf1, 0, 0, WIDTH, HEIGHT , null) ; 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		handler.render(g);
+		
 		if(gameState == STATE.Game) {
 			g.setColor(Color.WHITE);
 			g.fillRect(400, 0, 2, HEIGHT);
+
 			hud.render(g);
+			
 			
 		} else if (gameState == STATE.Menu || gameState == STATE.Help ||gameState == STATE.End) {
 			menu.render(g);
@@ -136,6 +153,8 @@ public class Game extends Canvas implements Runnable {
 		if(gameState == STATE.Game) {
 			hud.tick();
 			level.tick();	
+		} else if (gameState == STATE.Menu || gameState == STATE.End) {
+			menu.tick(); 
 		}
 		
 		

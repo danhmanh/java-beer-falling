@@ -1,6 +1,5 @@
 package GameDemo;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -18,14 +17,12 @@ public class Beer extends GameObject {
 
 	public Beer(int x, int y, ID id) {
 		super(x, y, id);
-		// TODO Auto-generated constructor stub
 		velX = 0 ; 
-		velY = 5 ; 
+		velY = 3 ; 
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 		x += velX ; 
 		y += velY ; 
 		
@@ -39,13 +36,10 @@ public class Beer extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-//		g.setColor(Color.WHITE);
-//		g.fillRect(x, y, sizeX, sizeY);
 		try {
-			bf  =ImageIO.read(new File("sprite/beer.gif")) ;
+			bf  =ImageIO.read(new File("sprite/beer.png")) ;
 			g.drawImage(bf, x, y, sizeX, sizeY, null ) ; 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
@@ -53,7 +47,6 @@ public class Beer extends GameObject {
 
 	@Override
 	public Rectangle getBound() {
-		// TODO Auto-generated method stub
 		return new Rectangle(x , y , sizeX , sizeY);
 	}
 

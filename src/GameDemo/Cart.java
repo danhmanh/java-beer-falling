@@ -1,6 +1,6 @@
 package GameDemo;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -18,6 +18,7 @@ public class Cart extends GameObject {
 	private int sizeY = 70;
 	private Random  rnd = new Random() ; 
 	public static int countBeerCollision = 0 ;
+	public static int countBeer = 0 ; 
 	private BufferedImage bf ; 
 	private HUD hud = new HUD() ; 
 
@@ -49,6 +50,7 @@ public class Cart extends GameObject {
 			if (tempObj.getId() == ID.Beer || tempObj.getId() == ID.BouncingBeer) {
 
 				if (getBound().intersects(tempObj.getBound())) {
+					countBeer ++ ; 
 					countBeerCollision ++ ; 
 					HUD.PERCENT -= 10;
 //					HUD.score += 25;
@@ -60,8 +62,11 @@ public class Cart extends GameObject {
 					HUD.PERCENT = 200;
 //					HUD.score = 0;
 //					hud.setScore(0);
+//					hud.setLevel(0);
 					
 					Game.gameState = STATE.End;
+					hud.setScore(0);
+					hud.setLevel(1);
 					handler.removeAllObj();
 				}
 
@@ -73,6 +78,18 @@ public class Cart extends GameObject {
 					handler.object.remove(tempObj) ; 
 				}
 			}
+			
+			if(tempObj.getId() == ID.DangerBomb && getBound().intersects(tempObj.getBound())) {
+				HUD.PERCENT = 200;
+				
+//				countBeer = 0 ; 
+//				HUD.score = 0;
+//				hud.setScore(0);
+				
+				Game.gameState = STATE.End;
+				handler.removeAllObj();
+//				hud.setLevel(0);
+			}
 		}
 
 	}
@@ -81,9 +98,9 @@ public class Cart extends GameObject {
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
 //		g.setColor(Color.GREEN);
-//		g.fillRect(x, y, sizeX, sizeY);
+//		g.drawRect(x + 10, y + 10, sizeX - 20, sizeY - 30);
 		try {
-			bf = ImageIO.read(new File("sprite/cart.png")) ;
+			bf = ImageIO.read(new File("sprite/cartfinal.png")) ;
 			g.drawImage(bf, x, y, sizeX, sizeY, null) ; 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -95,7 +112,7 @@ public class Cart extends GameObject {
 
 	@Override
 	public Rectangle getBound() {
-		return new Rectangle(x, y, sizeX, sizeY);
+		return new Rectangle(x + 10, y + 10, sizeX - 20, sizeY - 30);
 	}
 
 }

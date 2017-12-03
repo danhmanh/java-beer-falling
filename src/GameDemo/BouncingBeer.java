@@ -20,8 +20,8 @@ public class BouncingBeer extends GameObject {
 	public BouncingBeer(int x, int y, ID id) {
 		super(x, y, id);
 		// TODO Auto-generated constructor stub
-		velX = 3 ; 
-		velY = 3 ; 
+		velX = 2 ; 
+		velY = 2 ; 
 	}
 	
 		@Override
@@ -33,7 +33,7 @@ public class BouncingBeer extends GameObject {
 			
 			if(y >= Game.HEIGHT) {
 				x = rnd.nextInt(370) ;  
-				y = -50 ; 
+//				y = -50 ; 
 			}
 			if(x >= 370 || x < 0 ) {
 				velX = -velX ; 
@@ -47,7 +47,7 @@ public class BouncingBeer extends GameObject {
 //			g.setColor(Color.WHITE);
 //			g.fillRect(x, y, sizeX, sizeY);
 			try {
-				bf  =ImageIO.read(new File("sprite/beer.gif")) ;
+				bf  =ImageIO.read(new File("sprite/bbeer.png")) ;
 				g.drawImage(bf, x, y, sizeX, sizeY, null ) ; 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -61,5 +61,7 @@ public class BouncingBeer extends GameObject {
 			// TODO Auto-generated method stub
 			return new Rectangle(x , y , sizeX , sizeY);
 		}
+		
+		
 
 }

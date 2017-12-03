@@ -13,8 +13,13 @@ import javax.imageio.ImageIO;
 
 
 public class Game extends Canvas implements Runnable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final static int WIDTH = 600;
 	public final static int HEIGHT = 600;
+	@SuppressWarnings("unused")
 	private Random rnd ; 
 	
 	private Thread thread;
@@ -23,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 	private HUD hud ;
 	private Level level ;
 	private Menu menu ; 
-	private BufferedImage bf1 , bf2 ; 
+	private BufferedImage bf1; 
 	
 	public enum STATE {
 		Menu , Game , Help , End , Quit ,
@@ -120,7 +125,8 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		Graphics g = bs.getDrawGraphics() ; 
-
+//		g.setColor(Color.BLACK);
+//		g.fillRect(0, 0, WIDTH, HEIGHT);
 		try {
 			bf1 = ImageIO.read(new File("sprite/pinkbg1.jpg")) ;
 			g.drawImage(bf1, 0, 0, WIDTH, HEIGHT , null) ; 
@@ -133,6 +139,13 @@ public class Game extends Canvas implements Runnable {
 		if(gameState == STATE.Game) {
 			g.setColor(Color.WHITE);
 			g.fillRect(400, 0, 2, HEIGHT);
+			try {
+				bf1 = ImageIO.read(new File("sprite/bghud.png")) ;
+				g.drawImage(bf1, 400, 0, 200, HEIGHT , null) ; 
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 
 			hud.render(g);
 			

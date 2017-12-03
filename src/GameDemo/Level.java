@@ -3,6 +3,10 @@ package GameDemo;
 import java.awt.Graphics;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
+import GameDemo.Game.STATE;
+
 public class Level {
 	
 	private Handler handler ; 
@@ -16,20 +20,38 @@ public class Level {
 		this.hud = hud ; 
 	}
 	public void tick() {
+		
 		if(Cart.countBeerCollision == 4) {
 			hud.setLevel(hud.getLevel() + 1);
 			
-			if(hud.getLevel() == 2) {
-//				handler.addObj(new BouncingBeer(rnd.nextInt(380), 30, ID.BouncingBeer));
-//				handler.addObj(new Bomb(rnd.nextInt(380) , 20 , ID.Bomb));
-//				handler.addObj(new Bomb(rnd.nextInt(380) , -200 , ID.Bomb));
+			if(hud.getLevel() == 2) {				
+				handler.addObj(new BouncingBeer(rnd.nextInt(380), 30, ID.BouncingBeer));
+				handler.addObj(new DangerBomb(rnd.nextInt(100), -120, ID.DangerBomb));
+//				System.out.println(rnd.nextInt(200));
 				
 			} else if(hud.getLevel() == 3) {
-//				handler.addObj(new Bomb(rnd.nextInt(380) , 20 , ID.Bomb));
-			} else if(hud.getLevel() == 4) {
-				
+				handler.addObj(new DangerBomb(100 + rnd.nextInt(100), -120, ID.DangerBomb));
+			}
+			
+			
+			else if(hud.getLevel() == 4) {
+				handler.addObj(new Bomb(rnd.nextInt(380) , 20 , ID.Bomb));
+				handler.addObj(new DangerBomb(300 + rnd.nextInt(50), -120, ID.DangerBomb));
+//				System.out.println(rnd.nextInt(200));
+			} else if(hud.getLevel() == 6) {
+				handler.addObj(new BouncingBeer(rnd.nextInt(380), 30, ID.BouncingBeer)) ; 
+				handler.addObj(new DangerBomb(rnd.nextInt(370), -100, ID.DangerBomb));
+			} else if(hud.getLevel() == 10) {
+				handler.addObj(new DangerBomb(rnd.nextInt(370), -200, ID.DangerBomb));
 			}
 			Cart.countBeerCollision = 0 ; 
+		}
+		
+		if(Game.gameState == STATE.End) {
+			Cart.countBeerCollision = 0 ; 
+			Cart.countBeer = 0 ; 
+			hud.setLevel(1);
+
 		}
 		
 		

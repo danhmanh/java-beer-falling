@@ -37,7 +37,7 @@ public class Menu extends MouseAdapter {
 		hud  = new HUD()  ; 
 		int my = e.getY() ; 
 		int mx = e.getX() ; 
-		System.out.println(mx +" : " + my);
+
 		if(mouseOver(mx, my, 140, 150, 300, 75) && Game.gameState == STATE.Menu) {
 			game.gameState = STATE.Game  ; 
 			hud.setLevel(1);
